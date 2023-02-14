@@ -19,10 +19,12 @@ public class LaptopsXmlProvider : IXmlProvider<int>
 
     public async Task<XmlResult> GetAsync(int page, CancellationToken cancellationToken = default)
     {
-        var response = await _client.GetStreamAsync($"/{_options.CategoryName}?{_options.QueryParam}={page}");
+        var url = $"{_options.BaseAddress}/{_options.CategoryName}?{_options.QueryParam}={page}";
+
+        var response = await _client.GetStringAsync(url, cancellationToken);
 
         var document = new XmlDocument();
-        document.Load(response);
+        //document.Load(response);
 
         return new XmlResult
         {

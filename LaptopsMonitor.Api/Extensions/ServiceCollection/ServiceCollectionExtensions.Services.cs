@@ -7,13 +7,13 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace LaptopsMonitor.Api.Extensions;
+namespace LaptopsMonitor.Api.Extensions.ServiceCollection;
 
 public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddLaptopXmlProvider(this IServiceCollection services)
     {
-        return services.AddHttpClient<IXmlProvider<int>, LaptopsXmlProvider>()
+        return services.AddHttpClient<IXmlProvider<int>, LaptopsXmlProvider>(HttpOptions.Key)
             .Services;
     }
 
