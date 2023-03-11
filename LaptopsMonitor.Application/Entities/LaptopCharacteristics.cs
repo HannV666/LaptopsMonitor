@@ -4,19 +4,21 @@ namespace LaptopsMonitor.Application.Entities;
 
 public class LaptopCharacteristics : ILaptopCharacteristics
 {
-    public string Resolution { get; init; } = string.Empty;
+    public required string Resolution { get; init; }
     
-    public string DisplayMatrix { get; init; } = string.Empty;
+    public required string DisplayMatrix { get; init; }
     
-    public string DisplayRefreshRate { get; init; } = string.Empty;
+    public required string DisplayRefreshRate { get; init; }
     
-    public string Cpu { get; init; } = string.Empty;
+    public required string Cpu { get; init; }
     
-    public string Ram { get; init; } = string.Empty;
+    public required string Ram { get; init; }
     
-    public string Dd { get; init; } = string.Empty;
+    public required string Dd { get; init; }
     
-    public string Gpu { get; init; } = string.Empty;
+    public required string Gpu { get; init; }
+
+    public required string Os { get; init; }
     
-    public string Color { get; init; } = string.Empty;
+    public required string Color { get; init; }
 }

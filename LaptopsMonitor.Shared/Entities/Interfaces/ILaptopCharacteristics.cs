@@ -16,5 +16,7 @@ public interface ILaptopCharacteristics
     
     public string Gpu { get; }
     
+    public string Os { get; }
+    
     public string Color { get; }
 }

@@ -5,9 +5,9 @@ namespace LaptopsMonitor.Application.Entities;
 
 public class Laptop : MongoEntity, ILaptopEntity
 {
-    public string Name { get; init; } = string.Empty;
+    public required string Name { get; init; }
 
-    public decimal Price { get; init; }
+    public required decimal Price { get; init; }
     
-    public ILaptopCharacteristics? Characteristics { get; init; }
+    public required ILaptopCharacteristics Characteristics { get; init; }
 }

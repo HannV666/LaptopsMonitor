@@ -21,6 +21,7 @@ public static class LaptopCharacteristicsMapper
             Dd = laptopCharacteristics.Dd,
             DisplayRefreshRate = laptopCharacteristics.DisplayRefreshRate,
             Gpu = laptopCharacteristics.Gpu,
+            Os = laptopCharacteristics.Os,
             Ram = laptopCharacteristics.Ram
         };
     }

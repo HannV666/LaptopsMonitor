@@ -30,8 +30,10 @@ public class OnlinerLaptopCharacteristics : ILaptopCharacteristics
     public string Dd => SafeGet(5);
     
     public string Gpu => SafeGet(6);
+
+    public string Os => SafeGet(7);
     
-    public string Color => SafeGet(7);
+    public string Color => SafeGet(8);
 
     private string SafeGet(int index)
     {
