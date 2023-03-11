@@ -1,15 +1,17 @@
-using LaptopsMonitor.Api.Extensions.ServiceCollection;
+using LaptopsMonitor.DataClients.Laptops;
+using LaptopsMonitor.Entities;
+using LaptopsMonitor.Extensions;
+using LaptopsMonitor.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
 
-builder.Services.AddAppOptions()
-    .AddLaptopXmlProvider();
+builder.Services
+    .AddSerializerJsonOptions()
+    .AddDataClient<LaptopOptions, LaptopsDataClient, LaptopsParam, Laptop>();
 
 var app = builder.Build();
 
@@ -21,6 +23,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

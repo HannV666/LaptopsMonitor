@@ -1,22 +1,28 @@
-﻿using LaptopsMonitor.Domain.Interfaces;
+using LaptopsMonitor.DataClients.Laptops;
+using LaptopsMonitor.Domain.Interfaces;
+using LaptopsMonitor.Entities;
+using LaptopsMonitor.Shared.Results.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LaptopsMonitor.Api.Controllers;
+namespace LaptopsMonitor.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class TestController : ControllerBase
 {
-    private readonly IXmlProvider<int> _xmlProvider;
+    private readonly IDataClient<LaptopsParam, Laptop> _dataClient;
 
-    public TestController(IXmlProvider<int> xmlProvider)
+    public TestController(IDataClient<LaptopsParam, Laptop> dataClient)
     {
-        _xmlProvider = xmlProvider;
+        _dataClient = dataClient;
     }
 
-    [HttpGet("test")]
-    public async Task Do()
+    [HttpGet]
+    public async Task<IEnumerableResult<Laptop>> Do()
     {
-        await _xmlProvider.GetAsync(1);
+        return await _dataClient.GetAsync(new LaptopsParam
+        {
+            Page = 1
+        });
     }
 }
