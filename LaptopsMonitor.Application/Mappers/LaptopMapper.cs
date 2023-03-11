@@ -5,7 +5,7 @@ namespace LaptopsMonitor.Application.Mappers;
 
 public static class LaptopMapper
 {
-    public static Laptop ToEntity(this ILaptopEntity? entity)
+    public static Laptop ToEntity(this ILaptopEntity<ILaptopCharacteristics>? entity)
     {
         if (entity is null)
         {

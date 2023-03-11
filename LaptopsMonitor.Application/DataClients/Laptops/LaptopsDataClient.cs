@@ -12,23 +12,28 @@ namespace LaptopsMonitor.Application.DataClients.Laptops;
 public class LaptopsDataClient : HttpDataClient<LaptopsParam, Laptop>
 {
     private readonly JsonSerializerOptions _options;
-    
-    public LaptopsDataClient(IOptions<LaptopOptions> options, 
-        HttpClient client, 
-        JsonSerializerOptions options1) 
+
+    public LaptopsDataClient(IOptions<LaptopOptions> options,
+        HttpClient client,
+        JsonSerializerOptions options1)
         : base(options.Value, client)
     {
         _options = options1;
     }
 
-    protected override async Task<IEnumerableResult<Laptop>> HandleResponseAsync(HttpResponseMessage response, CancellationToken cancellationToken)
+    protected override async Task<IEnumerableResult<Laptop>> HandleResponseAsync(HttpResponseMessage response,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-            var onlinerResponse = await JsonSerializer.DeserializeAsync<OnlinerResponse>(utf8Json: stream, 
-                options: _options, 
-                cancellationToken: cancellationToken);
+            var stream = await response.Content
+                .ReadAsStreamAsync(cancellationToken)
+                .ConfigureAwait(false);
+
+            var onlinerResponse = await JsonSerializer.DeserializeAsync<OnlinerResponse>(utf8Json: stream,
+                    options: _options,
+                    cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
 
             if (onlinerResponse is null)
             {
@@ -41,7 +46,7 @@ public class LaptopsDataClient : HttpDataClient<LaptopsParam, Laptop>
 
             var data = onlinerResponse.Products
                 .Select(p => p.ToEntity());
-            
+
             return new EnumerableResult<Laptop>
             {
                 IsSuccessful = true,

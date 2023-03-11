@@ -13,12 +13,12 @@ namespace LaptopsMonitor.Infrastructure.Repositories.Base;
 public abstract class MongoRepository<TEntity>  : IRepository<TEntity>
     where TEntity : IMongoEntity
 {
-    private readonly IMongoCollection<TEntity> _collection;
+    protected readonly IMongoCollection<TEntity> Collection;
 
     protected MongoRepository(IOptions<IMongoOptions<TEntity>> options, IMongoClient client)
     {
         var options1 = options.Value;
-        _collection = client
+        Collection = client
             .GetDatabase(options1.DatabaseName)
             .GetCollection<TEntity>(options1.CollectionName);
     }
@@ -27,11 +27,11 @@ public abstract class MongoRepository<TEntity>  : IRepository<TEntity>
     {
         try
         {
-            var totalCount = await _collection
+            var totalCount = await Collection
                 .AsQueryable()
                 .CountAsync(cancellationToken);
         
-            var query = _collection
+            var query = Collection
                 .AsQueryable()
                 .Skip((pageOptions.Page - 1) * pageOptions.PageSize)
                 .Take(pageOptions.PageSize);
@@ -54,11 +54,11 @@ public abstract class MongoRepository<TEntity>  : IRepository<TEntity>
         }
     }
 
-    public async Task<IResult> BulkInsertAsync(IEnumerable<TEntity> data, CancellationToken cancellationToken = default)
+    public virtual async Task<IResult> BulkInsertAsync(IEnumerable<TEntity> data, CancellationToken cancellationToken = default)
     {
         try
         {
-            await _collection.InsertManyAsync(data, cancellationToken: cancellationToken);
+            await Collection.InsertManyAsync(data, cancellationToken: cancellationToken);
 
             return new Result
             {

@@ -21,7 +21,8 @@ public abstract class HttpDataClient<TIn, TOut> : IDataClient<TIn, TOut>
         try
         {
             var uri = new Uri(_options.BuildRoute(@in), UriKind.Absolute);
-            using var response = await _client.GetAsync(uri, cancellationToken);
+            using var response = await _client.GetAsync(uri, cancellationToken)
+                .ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -32,7 +33,8 @@ public abstract class HttpDataClient<TIn, TOut> : IDataClient<TIn, TOut>
                 };
             }
 
-            return await HandleResponseAsync(response, cancellationToken);
+            return await HandleResponseAsync(response, cancellationToken)
+                .ConfigureAwait(false);
         }
         catch (Exception e)
         {

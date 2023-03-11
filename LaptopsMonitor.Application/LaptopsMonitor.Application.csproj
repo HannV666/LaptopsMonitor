@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LaptopsMonitor.Infrastructure\LaptopsMonitor.Infrastructure.csproj" />
-      <ProjectReference Include="..\LaptopsMonitor.Shared\LaptopsMonitor.Shared.csproj" />
+        <ProjectReference Include="..\LaptopsMonitor.Infrastructure\LaptopsMonitor.Infrastructure.csproj" />
+        <ProjectReference Include="..\LaptopsMonitor.Shared\LaptopsMonitor.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

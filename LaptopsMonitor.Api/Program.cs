@@ -18,7 +18,9 @@ builder.Services.AddMongoClient(settings =>
 
 builder.Services
     .AddSerializerJsonOptions()
-    .AddLaptopsDataClient();
+    .AddLaptopsDataClient()
+    .AddLaptopRepository()
+    .AddMonitoringService();
 
 var app = builder.Build();
 

@@ -1,8 +1,9 @@
+using LaptopsMonitor.Infrastructure.Entities.Base;
 using LaptopsMonitor.Shared.Entities.Interfaces;
 
 namespace LaptopsMonitor.Application.Entities;
 
-public class LaptopCharacteristics : ILaptopCharacteristics
+public class LaptopCharacteristics : MongoEntity, ILaptopCharacteristics
 {
     public required string Resolution { get; init; }
     

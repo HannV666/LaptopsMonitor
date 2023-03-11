@@ -29,7 +29,8 @@ public class MonitoringService : BackgroundService
             var tasks = Enumerable.Range(1, _options.PagesToRead)
                 .Select(i => FetchAndSaveDataAsync(i, stoppingToken));
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks)
+                .ConfigureAwait(false);
         }
     }
 
@@ -46,7 +47,8 @@ public class MonitoringService : BackgroundService
             return;
         }
 
-        var result = await _repository.BulkInsertAsync(data.Data, cancellationToken);
+        var result = await _repository.BulkInsertAsync(data.Data, cancellationToken)
+            .ConfigureAwait(false);
 
         if (!result.IsSuccessful)
         {

@@ -39,6 +39,6 @@ public class OnlinerLaptopCharacteristics : ILaptopCharacteristics
     {
         return index >= Characteristics.Length
             ? string.Empty
-            : Characteristics[index];
+            : Characteristics[index].Trim();
     }
 }

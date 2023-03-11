@@ -5,6 +5,7 @@ using System.Text.Unicode;
 using LaptopsMonitor.Application.DataClients.Laptops;
 using LaptopsMonitor.Application.Entities;
 using LaptopsMonitor.Application.HostedServices.Monitoring;
+using LaptopsMonitor.Application.Repositories;
 using LaptopsMonitor.Infrastructure.DependencyInjection;
 
 namespace LaptopsMonitor.Extensions;
@@ -36,4 +37,7 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddLaptopsDataClient(this IServiceCollection serviceCollection) 
         => serviceCollection.AddDataClient<LaptopOptions, LaptopsDataClient, LaptopsParam, Laptop>();
+
+    public static IServiceCollection AddLaptopRepository(this IServiceCollection serviceCollection)
+        => serviceCollection.AddMongoRepository<LaptopRepository, LaptopRepositoryOptions, Laptop>();
 }
