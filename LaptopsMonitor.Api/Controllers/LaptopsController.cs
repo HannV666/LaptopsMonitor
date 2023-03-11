@@ -18,12 +18,12 @@ public class LaptopsController : ControllerBase
     }
 
     [HttpGet("/{page:int}")]
-    public async Task<IEnumerableResult<Laptop>> Do(int page)
+    public async Task<IEnumerableResult<Laptop>> Do([FromRoute] int page, [FromQuery] int pageSize = 30)
     {
         return await _repository.GetAsync(new PageOptions
         {
             Page = page,
-            PageSize = 30
+            PageSize = pageSize
         });
     }
 }

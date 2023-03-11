@@ -2,6 +2,7 @@ using LaptopsMonitor.Domain.Interfaces;
 using LaptopsMonitor.Infrastructure.Options.Interfaces;
 using LaptopsMonitor.Shared.Results.Interfaces;
 using LaptopsMonitor.Shared.Results.Primitives;
+using Microsoft.Extensions.Logging;
 
 namespace LaptopsMonitor.Infrastructure.Clients.Base;
 
@@ -9,11 +10,15 @@ public abstract class HttpDataClient<TIn, TOut> : IDataClient<TIn, TOut>
 {
     private readonly IClientOptions<TIn> _options;
     private readonly HttpClient _client;
+    private readonly ILogger<HttpDataClient<TIn, TOut>> _logger;
 
-    protected HttpDataClient(IClientOptions<TIn> options, HttpClient client)
+    protected HttpDataClient(IClientOptions<TIn> options, 
+        HttpClient client, 
+        ILogger<HttpDataClient<TIn, TOut>> logger)
     {
         _options = options;
         _client = client;
+        _logger = logger;
     }
 
     public async Task<IEnumerableResult<TOut>> GetAsync(TIn @in, CancellationToken cancellationToken = default)
@@ -26,13 +31,17 @@ public abstract class HttpDataClient<TIn, TOut> : IDataClient<TIn, TOut>
 
             if (!response.IsSuccessStatusCode)
             {
+                _logger.LogWarning("Onliner returned: {StatusCode}", response.StatusCode);
+                
                 return new EnumerableResult<TOut>
                 {
                     IsSuccessful = false,
                     Message = await response.Content.ReadAsStringAsync(cancellationToken)
                 };
             }
-
+            
+            _logger.LogInformation("Start to parse data for request : {Uri}", uri);
+            
             return await HandleResponseAsync(response, cancellationToken)
                 .ConfigureAwait(false);
         }
