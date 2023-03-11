@@ -4,7 +4,7 @@ using LaptopsMonitor.Domain.Options.Primitives;
 using LaptopsMonitor.Shared.Results.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LaptopsMonitor.Controllers;
+namespace LaptopsMonitor.Api.Controllers;
 
 [ApiController]
 [Route("api/laptops")]

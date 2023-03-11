@@ -8,7 +8,7 @@ using LaptopsMonitor.Application.HostedServices.Monitoring;
 using LaptopsMonitor.Application.Repositories;
 using LaptopsMonitor.Infrastructure.DependencyInjection;
 
-namespace LaptopsMonitor.Extensions;
+namespace LaptopsMonitor.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {

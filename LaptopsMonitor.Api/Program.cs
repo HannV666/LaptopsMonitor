@@ -1,4 +1,4 @@
-using LaptopsMonitor.Extensions;
+using LaptopsMonitor.Api.Extensions;
 using LaptopsMonitor.Infrastructure.DependencyInjection;
 using MongoDB.Driver;
 
