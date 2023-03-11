@@ -1,7 +1,7 @@
 using LaptopsMonitor.Infrastructure.Entities.Base;
 using LaptopsMonitor.Shared.Entities.Interfaces;
 
-namespace LaptopsMonitor.Entities;
+namespace LaptopsMonitor.Application.Entities;
 
 public class Laptop : MongoEntity, ILaptopEntity
 {

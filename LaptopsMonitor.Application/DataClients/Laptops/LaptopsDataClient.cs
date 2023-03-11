@@ -1,13 +1,13 @@
 using System.Text.Json;
-using LaptopsMonitor.DataClients.Laptops.OnlinerResponses;
-using LaptopsMonitor.Entities;
+using LaptopsMonitor.Application.DataClients.Laptops.OnlinerResponses;
+using LaptopsMonitor.Application.Entities;
+using LaptopsMonitor.Application.Mappers;
 using LaptopsMonitor.Infrastructure.Clients.Base;
-using LaptopsMonitor.Mappers;
 using LaptopsMonitor.Shared.Results.Interfaces;
 using LaptopsMonitor.Shared.Results.Primitives;
 using Microsoft.Extensions.Options;
 
-namespace LaptopsMonitor.DataClients.Laptops;
+namespace LaptopsMonitor.Application.DataClients.Laptops;
 
 public class LaptopsDataClient : HttpDataClient<LaptopsParam, Laptop>
 {
@@ -40,8 +40,7 @@ public class LaptopsDataClient : HttpDataClient<LaptopsParam, Laptop>
             }
 
             var data = onlinerResponse.Products
-                .Select(p => p.ToEntity())
-                .Where(e => e != null);
+                .Select(p => p.ToEntity());
             
             return new EnumerableResult<Laptop>
             {

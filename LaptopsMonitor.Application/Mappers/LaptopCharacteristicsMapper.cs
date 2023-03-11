@@ -1,15 +1,15 @@
-using LaptopsMonitor.Entities;
+using LaptopsMonitor.Application.Entities;
 using LaptopsMonitor.Shared.Entities.Interfaces;
 
-namespace LaptopsMonitor.Mappers;
+namespace LaptopsMonitor.Application.Mappers;
 
 public static class LaptopCharacteristicsMapper
 {
-    public static LaptopCharacteristics? ToEntity(this ILaptopCharacteristics? laptopCharacteristics)
+    public static LaptopCharacteristics ToEntity(this ILaptopCharacteristics? laptopCharacteristics)
     {
         if (laptopCharacteristics is null)
         {
-            return default;
+            throw new ArgumentNullException(nameof(laptopCharacteristics), "Mapping exception");
         }
         
         return new LaptopCharacteristics

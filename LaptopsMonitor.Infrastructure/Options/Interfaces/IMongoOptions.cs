@@ -1,8 +1,10 @@
+using LaptopsMonitor.Infrastructure.Entities.Interfaces;
+
 namespace LaptopsMonitor.Infrastructure.Options.Interfaces;
 
-public interface IMongoOptions
+public interface IMongoOptions<TEntity>
+    where TEntity : IMongoEntity
 {
-    string ConnectionString { get; }
     string DatabaseName { get; }
     string CollectionName { get; }
 }

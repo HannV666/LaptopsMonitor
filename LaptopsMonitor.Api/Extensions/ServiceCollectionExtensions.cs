@@ -2,8 +2,9 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
-using LaptopsMonitor.DataClients.Laptops;
-using LaptopsMonitor.Entities;
+using LaptopsMonitor.Application.DataClients.Laptops;
+using LaptopsMonitor.Application.Entities;
+using LaptopsMonitor.Application.HostedServices.Monitoring;
 using LaptopsMonitor.Infrastructure.DependencyInjection;
 
 namespace LaptopsMonitor.Extensions;
@@ -23,6 +24,14 @@ public static class ServiceCollectionExtensions
         };
         
         return serviceCollection.AddSingleton(options);
+    }
+
+    public static IServiceCollection AddMonitoringService(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddOptions<MonitoringOptions>()
+            .BindConfiguration(nameof(MonitoringOptions));
+
+        return serviceCollection.AddHostedService<MonitoringService>();
     }
     
     public static IServiceCollection AddLaptopsDataClient(this IServiceCollection serviceCollection) 

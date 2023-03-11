@@ -1,6 +1,6 @@
 using LaptopsMonitor.Infrastructure.Options.Interfaces;
 
-namespace LaptopsMonitor.DataClients.Laptops;
+namespace LaptopsMonitor.Application.DataClients.Laptops;
 
 public class LaptopOptions : IClientOptions<LaptopsParam>
 {

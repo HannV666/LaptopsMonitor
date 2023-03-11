@@ -1,4 +1,4 @@
-namespace LaptopsMonitor.DataClients.Laptops;
+namespace LaptopsMonitor.Application.DataClients.Laptops;
 
 public class LaptopsParam
 {

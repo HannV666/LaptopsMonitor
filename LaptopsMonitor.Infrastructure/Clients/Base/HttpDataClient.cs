@@ -45,4 +45,9 @@ public abstract class HttpDataClient<TIn, TOut> : IDataClient<TIn, TOut>
     }
 
     protected abstract Task<IEnumerableResult<TOut>> HandleResponseAsync(HttpResponseMessage response, CancellationToken cancellationToken);
+
+    public void Dispose()
+    {
+        _client.Dispose();
+    }
 }

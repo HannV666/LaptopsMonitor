@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaptopsMonitor.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaptopsMonitor.Api", "LaptopsMonitor.Api\LaptopsMonitor.Api.csproj", "{7271C6AB-4117-422B-806A-C8CDC5821BC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaptopsMonitor.Application", "LaptopsMonitor.Application\LaptopsMonitor.Application.csproj", "{A69DAC5F-940F-4ED1-880D-964945A74508}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{7271C6AB-4117-422B-806A-C8CDC5821BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7271C6AB-4117-422B-806A-C8CDC5821BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7271C6AB-4117-422B-806A-C8CDC5821BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A69DAC5F-940F-4ED1-880D-964945A74508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A69DAC5F-940F-4ED1-880D-964945A74508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A69DAC5F-940F-4ED1-880D-964945A74508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A69DAC5F-940F-4ED1-880D-964945A74508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{81DF7F33-A6F8-4696-B4A9-DF6181FE31A7} = {ABF8F02B-37E0-466E-BB6A-B596BD47FFF4}
 		{EE633CAE-62C1-4C52-8676-F77EC38AEDC5} = {ABF8F02B-37E0-466E-BB6A-B596BD47FFF4}
 		{7271C6AB-4117-422B-806A-C8CDC5821BC8} = {ABF8F02B-37E0-466E-BB6A-B596BD47FFF4}
+		{A69DAC5F-940F-4ED1-880D-964945A74508} = {ABF8F02B-37E0-466E-BB6A-B596BD47FFF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E00DED8E-BF21-4478-9E91-25DCE96E037A}

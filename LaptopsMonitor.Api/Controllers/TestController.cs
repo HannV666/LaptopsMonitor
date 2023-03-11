@@ -1,6 +1,6 @@
-using LaptopsMonitor.DataClients.Laptops;
+using LaptopsMonitor.Application.DataClients.Laptops;
+using LaptopsMonitor.Application.Entities;
 using LaptopsMonitor.Domain.Interfaces;
-using LaptopsMonitor.Entities;
 using LaptopsMonitor.Shared.Results.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

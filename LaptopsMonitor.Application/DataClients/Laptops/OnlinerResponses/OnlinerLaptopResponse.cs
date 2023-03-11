@@ -1,6 +1,6 @@
 using LaptopsMonitor.Shared.Entities.Interfaces;
 
-namespace LaptopsMonitor.DataClients.Laptops.OnlinerResponses;
+namespace LaptopsMonitor.Application.DataClients.Laptops.OnlinerResponses;
 
 public class OnlinerLaptopResponse : ILaptopEntity
 {

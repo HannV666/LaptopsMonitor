@@ -4,6 +4,7 @@ using LaptopsMonitor.Infrastructure.Entities.Interfaces;
 using LaptopsMonitor.Infrastructure.Options.Interfaces;
 using LaptopsMonitor.Shared.Results.Interfaces;
 using LaptopsMonitor.Shared.Results.Primitives;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -12,15 +13,14 @@ namespace LaptopsMonitor.Infrastructure.Repositories.Base;
 public abstract class MongoRepository<TEntity>  : IRepository<TEntity>
     where TEntity : IMongoEntity
 {
-    private readonly IMongoOptions _options;
     private readonly IMongoCollection<TEntity> _collection;
 
-    protected MongoRepository(IMongoOptions options, IMongoClient client)
+    protected MongoRepository(IOptions<IMongoOptions<TEntity>> options, IMongoClient client)
     {
-        _options = options;
+        var options1 = options.Value;
         _collection = client
-            .GetDatabase(_options.DatabaseName)
-            .GetCollection<TEntity>(_options.CollectionName);
+            .GetDatabase(options1.DatabaseName)
+            .GetCollection<TEntity>(options1.CollectionName);
     }
 
     public async Task<IEnumerableResult<TEntity>> GetAsync(PageOptions pageOptions, CancellationToken cancellationToken = default)

@@ -1,4 +1,4 @@
-namespace LaptopsMonitor.DataClients.Laptops.OnlinerResponses;
+namespace LaptopsMonitor.Application.DataClients.Laptops.OnlinerResponses;
 
 public class OnlinerResponse
 {

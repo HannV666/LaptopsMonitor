@@ -1,7 +1,6 @@
-using LaptopsMonitor.DataClients.Laptops;
-using LaptopsMonitor.Entities;
 using LaptopsMonitor.Extensions;
 using LaptopsMonitor.Infrastructure.DependencyInjection;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +8,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMongoClient(settings =>
+{
+    var host = builder.Configuration["MongoAddress:Host"];
+    var port = builder.Configuration.GetSection("MongoAddress:Port").Get<int>();
+
+    settings.Server = new MongoServerAddress(host, port);
+});
+
 builder.Services
     .AddSerializerJsonOptions()
-    .AddDataClient<LaptopOptions, LaptopsDataClient, LaptopsParam, Laptop>();
+    .AddLaptopsDataClient();
 
 var app = builder.Build();
 

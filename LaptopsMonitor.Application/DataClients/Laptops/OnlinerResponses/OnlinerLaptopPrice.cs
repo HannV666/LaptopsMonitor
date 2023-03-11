@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace LaptopsMonitor.DataClients.Laptops.OnlinerResponses;
+namespace LaptopsMonitor.Application.DataClients.Laptops.OnlinerResponses;
 
 public class OnlinerLaptopPrice
 {
@@ -9,7 +9,6 @@ public class OnlinerLaptopPrice
 
     public class Price
     {
-        [JsonPropertyName("amount")]
-        public string Amount { get; init; }
+        [JsonPropertyName("amount")] public string Amount { get; init; } = "0";
     }
 }
