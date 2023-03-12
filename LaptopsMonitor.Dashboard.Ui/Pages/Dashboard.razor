@@ -1,0 +1,13 @@
+@page "/dashboard/{page:int}"
+@using LaptopsMonitor.Dashboard.Application.ViewModels
+@inherits LaptopsMonitor.Dashboard.Application.ViewModels.DashboardViewModel
+
+<div>
+    @foreach (var item in Laptops ?? Enumerable.Empty<LaptopViewModel>())
+    {
+        <div>
+            <div>@item.Name</div>
+            <div></div>
+        </div>
+    }
+</div>

@@ -20,9 +20,12 @@ builder.Services
     .AddSerializerJsonOptions()
     .AddLaptopsDataClient()
     .AddLaptopRepository()
-    .AddMonitoringService();
+    .AddMonitoringService()
+    .DisallowCors();
 
 var app = builder.Build();
+
+app.UseCors("DisallowCors");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

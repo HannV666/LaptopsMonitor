@@ -34,6 +34,22 @@ public static class ServiceCollectionExtensions
 
         return serviceCollection.AddHostedService<MonitoringService>();
     }
+
+    public static IServiceCollection DisallowCors(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddCors(setup =>
+        {
+            setup.AddPolicy("DisallowCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed(o => true);
+            });
+        });
+
+        return serviceCollection;
+    }
     
     public static IServiceCollection AddLaptopsDataClient(this IServiceCollection serviceCollection) 
         => serviceCollection.AddDataClient<LaptopOptions, LaptopsDataClient, LaptopsParam, Laptop>();
