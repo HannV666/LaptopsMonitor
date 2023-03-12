@@ -18,12 +18,23 @@ public class LaptopsController : ControllerBase
     }
 
     [HttpGet("/{page:int}")]
-    public async Task<IEnumerableResult<Laptop>> Do([FromRoute] int page, [FromQuery] int pageSize = 30)
+    public async Task<IEnumerableResult<Laptop>> Do([FromRoute] int page,
+        CancellationToken cancellationToken,
+        [FromQuery] int pageSize = 30,
+        [FromQuery] string? filter = default)
     {
+        var filterOptions = string.IsNullOrEmpty(filter)
+            ? default
+            : new FilterOptions<Laptop>
+            {
+                Filter = filter,
+                FilterExpression = t => Laptop.IsMatch(t, filter.Trim())
+            };
+
         return await _repository.GetAsync(new PageOptions
         {
             Page = page,
             PageSize = pageSize
-        });
+        }, filterOptions, cancellationToken);
     }
 }

@@ -2,12 +2,76 @@
 @using LaptopsMonitor.Dashboard.Application.ViewModels
 @inherits LaptopsMonitor.Dashboard.Application.ViewModels.DashboardViewModel
 
-<div>
-    @foreach (var item in Laptops ?? Enumerable.Empty<LaptopViewModel>())
-    {
-        <div>
-            <div>@item.Name</div>
-            <div></div>
-        </div>
+<style>
+    .dashboard {
+        background: rgb(38, 33, 33);
+        font-family: "Inter", Arial;
+        color: gainsboro;
+        padding: 20px;
     }
+    .filter {
+        border: 2px solid lightgray;
+        background: rgb(38, 33, 33);
+        margin: 5px;
+        color: gainsboro;
+    }
+    .laptop-card {
+        border: 1px solid lightgray;
+        background: rgb(38, 33, 33);
+        padding: 5px 5px 5px 15px;
+        margin: 5px;
+        border-radius: 10px;
+    }
+    .laptop-card:hover {
+        border: 1px solid rgb(38, 33, 33);
+        background: lightgray;
+        border-radius: 10px;
+        transition: all 0.3s;
+        color: rgb(38, 33, 33);
+    }
+    .laptop-name {
+        font-weight: 600;
+        font-size: 14px;
+    }
+    .pages {
+        margin: 5px;
+        padding: 5px;
+    }
+    .page-btn {
+        background: rgb(38, 33, 33);
+        font-family: "Inter", Arial;
+        color: gainsboro;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        padding: 15px;
+    }
+    .page-btn:hover {
+        background: gainsboro;
+        color: rgb(38, 33, 33);
+        transition: all 0.3s;
+    }
+</style>
+
+<div class="dashboard">
+    <div>
+        <input class="filter" type="text" @bind="Filter" placeholder="filter laptops" @onchange="FilterAsync"/>
+        <span>@Message</span>
+    </div>
+    <div>
+        @foreach (var item in Laptops ?? Enumerable.Empty<LaptopViewModel>())
+        {
+            <div class="laptop-card">
+                <div class="laptop-name">@item.Name</div>
+                <div>@item.CreationDate.ToString("d")</div>
+                <div>@item.Price BYN</div>
+                <div>@item.GetDescription()</div>
+            </div>
+        }
+    </div>
+    <div>
+        <div class="pages">
+            <button class="page-btn" type="button" @onclick="MovePrev">Prev page</button>
+            <button class="page-btn" type="button" @onclick="MoveNext">Next page</button>
+        </div>
+    </div>
 </div>

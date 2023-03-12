@@ -10,4 +10,8 @@ public class Laptop : MongoEntity, ILaptopEntity<LaptopCharacteristics>
     public required decimal Price { get; init; }
     
     public required LaptopCharacteristics Characteristics { get; init; }
+
+    public static bool IsMatch(Laptop laptop, string filter)
+        => laptop.Name.Contains(filter) ||
+           LaptopCharacteristics.IsMatch(laptop.Characteristics, filter);
 }

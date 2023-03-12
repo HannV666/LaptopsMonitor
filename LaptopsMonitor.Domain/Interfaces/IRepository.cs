@@ -5,6 +5,9 @@ namespace LaptopsMonitor.Domain.Interfaces;
 
 public interface IRepository<T>
 {
-    Task<IEnumerableResult<T>> GetAsync(PageOptions pageOptions, CancellationToken cancellationToken = default);
+    Task<IEnumerableResult<T>> GetAsync(PageOptions pageOptions,
+        FilterOptions<T>? options = default,
+        CancellationToken cancellationToken = default);
+
     Task<IResult> BulkInsertAsync(IEnumerable<T> data, CancellationToken cancellationToken = default);
 }

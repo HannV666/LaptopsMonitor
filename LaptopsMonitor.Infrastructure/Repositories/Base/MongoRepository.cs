@@ -30,6 +30,7 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
     }
 
     public async Task<IEnumerableResult<TEntity>> GetAsync(PageOptions pageOptions,
+        FilterOptions<TEntity>? options = default,
         CancellationToken cancellationToken = default)
     {
         try
@@ -38,14 +39,21 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
                 .AsQueryable()
                 .CountAsync(cancellationToken);
 
-            var data = await Collection
-                .AsQueryable()
+            var query = Collection
+                .AsQueryable();
+
+            if (options is not null)
+            {
+                query = query.Where(options.FilterExpression);
+            }
+
+            var data = await query
                 .Skip((pageOptions.Page - 1) * pageOptions.PageSize)
                 .Take(pageOptions.PageSize)
                 .ToListAsync(cancellationToken);
 
-            _logger.LogInformation("Were loaded {PageSize} of {TotalSize} items", 
-                data.Count, 
+            _logger.LogInformation("Were loaded {PageSize} of {TotalSize} items",
+                data.Count,
                 totalCount);
 
             return new PagedResult<TEntity>
@@ -59,7 +67,7 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
         catch (Exception e)
         {
             _logger.LogError(e, "Exception at getting data from mongo");
-            
+
             return new PagedResult<TEntity>
             {
                 IsSuccessful = false,
@@ -83,7 +91,7 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
         catch (Exception e)
         {
             _logger.LogError(e, "Exception at inserting data into mongo");
-            
+
             return new Result
             {
                 IsSuccessful = false,
