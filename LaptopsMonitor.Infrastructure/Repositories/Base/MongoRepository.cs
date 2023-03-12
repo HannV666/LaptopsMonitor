@@ -61,7 +61,8 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
                 IsSuccessful = true,
                 Page = pageOptions.Page,
                 TotalPages = totalCount / pageOptions.PageSize,
-                Data = data
+                Data = data,
+                Message = $"Were loaded {pageOptions.PageSize} of {totalCount} items"
             };
         }
         catch (Exception e)

@@ -28,7 +28,7 @@ public class LaptopsController : ControllerBase
             : new FilterOptions<Laptop>
             {
                 Filter = filter,
-                FilterExpression = t => Laptop.IsMatch(t, filter.Trim())
+                FilterExpression = Laptop.IsMatch(filter.Trim())
             };
 
         return await _repository.GetAsync(new PageOptions

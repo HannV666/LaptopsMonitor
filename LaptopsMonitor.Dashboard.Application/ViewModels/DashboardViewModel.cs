@@ -20,19 +20,12 @@ public class DashboardViewModel : ComponentBase
     [Parameter]
     public int Page { get; set; }
     
-    [Parameter]
     public string? Filter { get; set; }
     
     public IEnumerable<LaptopViewModel>? Laptops { get; private set; } 
         = Enumerable.Empty<LaptopViewModel>();
     
     public string? Message { get; set; }
-
-    public async Task FilterAsync()
-    {
-        NavigationManager.NavigateTo($"dashboard/{++Page}?filter={Filter}");
-        await FetchAsync();
-    }
 
     public async Task MoveNext()
     {
@@ -49,6 +42,7 @@ public class DashboardViewModel : ComponentBase
     private async Task FetchAsync()
     {
         Message = string.Empty;
+        Laptops = Enumerable.Empty<LaptopViewModel>();
 
         var param = new LaptopParam
         {
@@ -61,17 +55,21 @@ public class DashboardViewModel : ComponentBase
         
         var result = await DataClient.GetAsync(param);
 
-        if (!result.IsSuccessful)
-        {
-            Message = result.Message;
-        }
-
+        Message = result.Message;
         Laptops = result.Data;
     }
 
     protected override async Task OnInitializedAsync()
     { 
         await base.OnInitializedAsync();
+        
+        await FetchAsync();
+    }
+    
+    public async void OnFilterChanged(ChangeEventArgs args)
+    {
+        Filter = args.Value as string;
+        Page = 1;
 
         await FetchAsync();
     }
