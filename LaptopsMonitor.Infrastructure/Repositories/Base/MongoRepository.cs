@@ -35,10 +35,6 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
     {
         try
         {
-            var totalCount = await Collection
-                .AsQueryable()
-                .CountAsync(cancellationToken);
-
             var query = Collection
                 .AsQueryable();
 
@@ -47,22 +43,29 @@ public abstract class MongoRepository<TEntity> : IRepository<TEntity>
                 query = query.Where(options.FilterExpression);
             }
 
+            var totalCount = await query.CountAsync(cancellationToken);
+            var totalPages = (totalCount + pageOptions.PageSize - 1) / pageOptions.PageSize;
+
             var data = await query
                 .Skip((pageOptions.Page - 1) * pageOptions.PageSize)
                 .Take(pageOptions.PageSize)
                 .ToListAsync(cancellationToken);
 
-            _logger.LogInformation("Were loaded {PageSize} of {TotalSize} items",
+            _logger.LogInformation(
+                "Were loaded {Page} with {PageSize} items of {TotalSize} total items ({TotalPages} total pages)",
+                pageOptions.Page,
                 data.Count,
-                totalCount);
+                totalCount,
+                totalPages);
 
             return new PagedResult<TEntity>
             {
                 IsSuccessful = true,
                 Page = pageOptions.Page,
-                TotalPages = totalCount / pageOptions.PageSize,
+                TotalPages = totalPages,
                 Data = data,
-                Message = $"Were loaded {pageOptions.PageSize} of {totalCount} items"
+                Message =
+                    $"Were loaded {pageOptions.Page} with {pageOptions.PageSize} items of {totalCount} total items ({totalPages} total pages)"
             };
         }
         catch (Exception e)

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using LaptopsMonitor.Dashboard.Application.DataClients.Laptops;
 using LaptopsMonitor.Domain.Interfaces;
+using LaptopsMonitor.Shared.Results.Primitives;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -8,6 +9,8 @@ namespace LaptopsMonitor.Dashboard.Application.ViewModels;
 
 public class DashboardViewModel : ComponentBase
 {
+    public int TotalPages { get; set; }
+    
     [Inject]
     public NavigationManager NavigationManager { get; set; }
     
@@ -16,33 +19,47 @@ public class DashboardViewModel : ComponentBase
     
     [Inject]
     public ILogger<DashboardViewModel> Logger { get; set; }
-    
-    [Parameter]
-    public int Page { get; set; }
+
+    public int Page { get; set; } = 1;
     
     public string? Filter { get; set; }
     
-    public IEnumerable<LaptopViewModel>? Laptops { get; private set; } 
-        = Enumerable.Empty<LaptopViewModel>();
+    public List<LaptopViewModel> Laptops { get; private set; } 
+        = new();
     
     public string? Message { get; set; }
 
     public async Task MoveNext()
     {
-        NavigationManager.NavigateTo($"dashboard/{++Page}");
+        if (Page >= TotalPages)
+        {
+            return;
+        }
+        
+        Page++;
         await FetchAsync();
+        
+        StateHasChanged();
     }
     
     public async Task MovePrev()
     {
-        NavigationManager.NavigateTo($"dashboard/{--Page}");
+        if (Page <= 1)
+        {
+            return;
+        }
+        
+        Page--;
         await FetchAsync();
+        
+        StateHasChanged();
     }
 
     private async Task FetchAsync()
     {
         Message = string.Empty;
-        Laptops = Enumerable.Empty<LaptopViewModel>();
+        Laptops.Clear();
+        Page = Page == 0 ? 1 : Page;
 
         var param = new LaptopParam
         {
@@ -53,24 +70,26 @@ public class DashboardViewModel : ComponentBase
         
         Logger.LogInformation("Params: {Params}", JsonSerializer.Serialize(param));
         
-        var result = await DataClient.GetAsync(param);
+        var result = await DataClient.GetAsync(param) as PagedResult<LaptopViewModel> ??
+                     new PagedResult<LaptopViewModel>();
 
         Message = result.Message;
-        Laptops = result.Data;
+        Laptops.AddRange(result.Data ?? new List<LaptopViewModel>());
+        TotalPages = result.TotalPages;
     }
 
     protected override async Task OnInitializedAsync()
     { 
-        await base.OnInitializedAsync();
-        
         await FetchAsync();
     }
-    
+
     public async void OnFilterChanged(ChangeEventArgs args)
     {
         Filter = args.Value as string;
         Page = 1;
 
         await FetchAsync();
+        
+        StateHasChanged();
     }
 }

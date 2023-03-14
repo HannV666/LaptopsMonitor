@@ -1,6 +1,8 @@
-@page "/dashboard/{page:int}"
+@page "/dashboard"
 @using LaptopsMonitor.Dashboard.Application.ViewModels
 @inherits LaptopsMonitor.Dashboard.Application.ViewModels.DashboardViewModel
+
+<PageTitle>Dashboard</PageTitle>
 
 <style>
     .dashboard {
@@ -8,6 +10,11 @@
         font-family: "Inter", Arial;
         color: gainsboro;
         padding: 20px;
+        min-height: 100vh;
+    }
+    .not-found {
+        text-align: center;
+        font-size: xx-large;
     }
     .filter {
         border: 2px solid lightgray;
@@ -36,6 +43,9 @@
     .pages {
         margin: 5px;
         padding: 5px;
+        position: fixed;
+        right:    0;
+        bottom:   0;
     }
     .page-btn {
         background: rgb(38, 33, 33);
@@ -54,18 +64,27 @@
 
 <div class="dashboard">
     <div>
-        <input class="filter" type="text" placeholder="filter laptops" @onchange="OnFilterChanged"/>
+        <input class="filter" type="text" placeholder="filter laptops" @oninput="OnFilterChanged"/>
         <span>@Message</span>
     </div>
     <div>
-        @foreach (var item in Laptops ?? Enumerable.Empty<LaptopViewModel>())
+        @if (Laptops.Count == 0)
         {
-            <div class="laptop-card">
-                <div class="laptop-name">@item.Name</div>
-                <div>@item.CreationDate.ToString("d")</div>
-                <div>@item.Price BYN</div>
-                <div>@item.GetDescription()</div>
+            <div class="not-found">
+                No items
             </div>
+        }
+        else
+        {
+            foreach (var item in Laptops ?? Enumerable.Empty<LaptopViewModel>())
+            {
+                <div class="laptop-card">
+                    <div class="laptop-name">@item.Name</div>
+                    <div>@item.CreationDate.ToString("d")</div>
+                    <div>@item.Price BYN</div>
+                    <div>@item.GetDescription()</div>
+                </div>
+            }
         }
     </div>
     <div>
